@@ -1,11 +1,11 @@
 <div class="container">
 <div class="card mt-4 mx-auto">
   <div class="card-header">
-    My Dream House
+    {{houses.name}}
   </div>
   <div class="card-body mx-auto">
-    <img class="rounded mt-5 text-center img-fluid" src="https://images.unsplash.com/photo-1591474200742-8e512e6f98f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" class="img-fluid" alt="">
-    <p class="card-text mt-4">With supporting text below as a natural lead-in to additional content.</p>
+    <img class="rounded mt-5 text-center img-fluid" src="{{houses.images}}" class="img-fluid" alt="">
+    <p class="card-text mt-4">{{houses.description}}</p>
     <div class="price mt-2">Price: $100,000.00</div>
     <a href="#" class="btn btn-primary mt-4">Оставить заявку</a>
   </div>
