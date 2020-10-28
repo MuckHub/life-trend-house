@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use('/', indexRouter);
-app.use('/house', houseRouter);
+app.use('/houses', houseRouter);
 
 
 

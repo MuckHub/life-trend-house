@@ -7,45 +7,39 @@ const upload = multer({ dest: '../../public/img' });
 const House = require('../models/House');
 
 router
-  .route('/')
-  .get( async (req, res) => {
+  .route('/') // otobrazhem vse doma v resulatate nazhatija na spisok iz treh domikov
+  .get(async (req, res) => {
     const houses = await House.find().lean();
     res.render('houses', { houses });
-  })
+  }) // v post priletaet zapolnenaja adminom formo4ka novyj dom s hbs-ski houses/show, kotoray renderit'sja po ru4ke /houses/new
   .post((upload.single('image_uploads'), async (req, res) => {
     fs.renameSync(req.file.path, path.join(process.env.PWD, `public/img/${req.file.originalname}`));
     const { price, name, description } = req.body;
     const house = new House({ price, name, description });
-    await house.save();
+    await house.save();// vozmozhno ne nuzhno?
     res.redirect(`/houses/${house.id}`);
   }));
 
-router.put('/:id', async function (req, res, next) {
+router.put('/:id', async function (req, res, next) { //sohranjaem v bazu dannyh
   const house = await House.findById(req.params.id);
-
-  house.name = req.body.name;
-  house.description = req.body.description;
-  house.price = req.body.price;
-
   await house.save();
-
   res.redirect(`/houses/${house.id}`);
 });
 
-router.get('/:id', async function (req, res, next) {
-  let entry = await Entry.findById(req.params.id);
-  res.render('entries/show', { entry });
+router.get('/:id', async function (req, res, next) { //pokazayvaem kak budet vygladet' novyj domik, opcii EDIT i DELETE
+  const house = await House.findById(req.params.id);
+  res.render('houses/show', { house });
 });
 
-router.route('/new')
+router.route('/new') //sozdaem formo4ki dlja zapolnenija adminom
   .get((req, res) => {
-    // otobrazhetsja vse formy dlja wablona dom
+    res.render('houses/new');
   })
 
 
 router.get('/:id', (req, res) => {
-      // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
-    });
+  // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
+});
 
 router.get('/:id/edit', (req, res) => {
   // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
