@@ -7,8 +7,10 @@ const multer = require('multer');
 const app = express();
 const indexRouter = require('./src/routes/index');
 const houseRouter = require('./src/routes/house');
-const methodOverride = require('method-override')
 const portfolioRouter = require('./src/routes/portfolio');
+const adminRouter = require('./src/routes/admin');
+
+const methodOverride = require('method-override')
 const dbConnect = require('./src/config/dbConnect');
 
 dbConnect();
@@ -35,6 +37,7 @@ app.use(express.json());
 app.use('/', indexRouter);
 app.use('/houses', houseRouter);
 app.use('/portfolio', portfolioRouter);
+app.use('/admin', adminRouter);
 
 app.listen(PORT, () => {
   console.log('server started on PORT: ', PORT);
