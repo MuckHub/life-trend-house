@@ -12,8 +12,8 @@ const options = {
 };
 
 const {
-  DB_NAME,
   DB_USER,
+  DB_NAME,
   DB_PASSWORD,
 } = process.env;
 
