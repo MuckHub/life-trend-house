@@ -13,91 +13,65 @@ router
     const houses = await House.find().lean();
     res.render('houses', { houses });
   })
-  .post(
-    (upload.single('image_uploads'),
-      async (req, res) => {
-        fs.renameSync(
-          req.file.path,
-          path.join(process.env.PWD, `public/img/${req.file.originalname}`)
-        );
-        const { price, name, description } = req.body;
-        const house = new House({ price, name, description });
-        await house.save();
-        res.redirect(`/houses/${house.id}`);
-      })
-  );
 
+router.get('/:id', async function (req, res, next) {
+  let houses = await House.findById(req.params.id);
+  res.render('detailed', { houses });
 
-router.put('/:id', async function (req, res, next) {
+});
+
+router.get('/new', (req, res) => {
+  const house = new House();
+  res.redirect(`/houses/${house.id}/edit`);
+});
+
+router.get('/:id/edit', async (req, res) => {
   const house = await House.findById(req.params.id);
+  res.render('houseEditForm', { house });
+});
 
+router.post('/:id/save', upload.single('image_upload'), async (req, res) => {
+  const oldpath = reg.file.path;
+  const newpath = oldpath.replace(req.file.filename, req.file.originalname);
+  fs.renameSync(oldpath, newpath);
+  const house = await House.findById(req.params.id);
+  house.images = newpath;
+  house.price = req.body.price;
   house.name = req.body.name;
   house.description = req.body.description;
-  house.price = req.body.price;
-
   await house.save();
-
   res.redirect(`/houses/${house.id}`);
 });
 
-router.post('/:id/request', async (req, res) => {
+router.get('/:id/delete', async (req, res) => {
+  await House.deleteOne({ '_id': req.params.id });
+  res.redirect('/');
+});
 
-  const id = req.params.id;
+// router.post('/:id/request', async (req, res) => {
+//   const id = req.params.id;
+//   try {
+//     let testAccount = await nodemailer.createTestAccount();
 
-  try {
-    let testAccount = await nodemailer.createTestAccount();
+//     let transporter = nodemailer.createTransport({
+//       host: "smtp.ethereal.email",
+//       port: 587,
+//       secure: false,
+//       auth: {
+//         user: testAccount.user,
+//         pass: testAccount.pass,
+//       },
+//     });
 
-    let transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
-      secure: false,
-      auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
-      },
-    });
-
-    let info = await transporter.sendMail({
-      from: // нужен адрес почты 
-        to: // кому отправляем
-      subject: "Новая заявка",
-      text: // текст сообщения
-        html: // тело сообщения
-    });
-    res.status(200).send('Ok');
-  } catch (error) {
-    res.status(401).send('ой ой что-то пошло не так');
-  }
-
-  router.get('/:id', async function (req, res, next) {
-    let houses = await House.findById(req.params.id);
-    res.render('detailed', { houses });
-
-  });
-
-  router.route('/new').get((req, res) => {
-    // otobrazhetsja vse formy dlja wablona dom
-  });
-
-  router.get('/:id', (req, res) => {
-    // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
-  });
-
-  router.get('/:id/edit', (req, res) => {
-    // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
-  });
-
-  router.get('/:id/delete', (req, res) => {
-    //chistim bazu dannyh?
-  });
-
-  router.post('/:id/save', upload.single('image_uploads'), async (req, res) => {
-    fs.renameSync(
-      req.file.path,
-      path.join(process.env.PWD, `public/img/${req.file.originalname}`)
-    ); //put' skoree vsego nevernyj
-    const { price, name, description } = req.body;
-    await house.updateOne(req.params.id, { price, name, description });
-  });
-
-  module.exports = router;
+//     let info = await transporter.sendMail({
+//       // from: // нужен адрес почты 
+//       //   to: // кому отправляем
+//       // subject: "Новая заявка",
+//       // text: // текст сообщения
+//       //   html: // тело сообщения
+//     });
+//     res.status(200).send('Ok');
+//   } catch (error) {
+//     res.status(401).send('ой ой что-то пошло не так');
+//   }
+module.exports = router;
