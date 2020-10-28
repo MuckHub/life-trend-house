@@ -6,7 +6,10 @@ const multer = require('multer');
 const app = express();
 const indexRouter = require('./src/routes/index');
 const houseRouter = require('./src/routes/house');
+const dbConnect = require('./src/config/dbConnect');
 
+
+dbConnect();
 const PORT = process.env.PORT || 3000
 
 app.set('view engine', 'hbs');
