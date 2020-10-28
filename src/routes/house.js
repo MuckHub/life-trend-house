@@ -5,20 +5,28 @@ const path = require('path');
 const multer = require('multer');
 const upload = multer({ dest: '../../public/img' });
 const House = require('../models/House');
+const nodemailer = require('nodemailer');
 
 router
-  .route('/') // otobrazhem vse doma v resulatate nazhatija na spisok iz treh domikov
+  .route('/')
   .get(async (req, res) => {
     const houses = await House.find().lean();
     res.render('houses', { houses });
-  }) // v post priletaet zapolnenaja adminom formo4ka novyj dom s hbs-ski houses/show, kotoray renderit'sja po ru4ke /houses/new
-  .post((upload.single('image_uploads'), async (req, res) => {
-    fs.renameSync(req.file.path, path.join(process.env.PWD, `public/img/${req.file.originalname}`));
-    const { price, name, description } = req.body;
-    const house = new House({ price, name, description });
-    await house.save();// vozmozhno ne nuzhno?
-    res.redirect(`/houses/${house.id}`);
-  }));
+  })
+  .post(
+    (upload.single('image_uploads'),
+      async (req, res) => {
+        fs.renameSync(
+          req.file.path,
+          path.join(process.env.PWD, `public/img/${req.file.originalname}`)
+        );
+        const { price, name, description } = req.body;
+        const house = new House({ price, name, description });
+        await house.save();
+        res.redirect(`/houses/${house.id}`);
+      })
+  );
+
 
 router.put('/:id', async function (req, res, next) { //sohranjaem v bazu dannyh
   const house = await House.findById(req.params.id);
@@ -26,36 +34,64 @@ router.put('/:id', async function (req, res, next) { //sohranjaem v bazu dannyh
   res.redirect(`/houses/${house.id}`);
 });
 
-router.get('/:id', async function (req, res, next) { //pokazayvaem kak budet vygladet' novyj domik, opcii EDIT i DELETE
-  const house = await House.findById(req.params.id);
-  res.render('houses/show', { house });
-});
+router.post('/:id/request', async (req, res) => {
 
-router.route('/new') //sozdaem formo4ki dlja zapolnenija adminom
-  .get((req, res) => {
-    res.render('houses/new');
-  })
+  const id = req.params.id;
 
+  try {
+    let testAccount = await nodemailer.createTestAccount();
 
-router.get('/:id', (req, res) => {
-  // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
-});
+    let transporter = nodemailer.createTransport({
+      host: "smtp.ethereal.email",
+      port: 587,
+      secure: false,
+      auth: {
+        user: testAccount.user,
+        pass: testAccount.pass,
+      },
+    });
 
-router.get('/:id/edit', (req, res) => {
-  // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
-});
+    let info = await transporter.sendMail({
+      from: // нужен адрес почты 
+        to: // кому отправляем
+      subject: "Новая заявка",
+      text: // текст сообщения
+        html: // тело сообщения
+    });
+    res.status(200).send('Ok');
+  } catch (error) {
+    res.status(401).send('ой ой что-то пошло не так');
+  }
 
-router.get('/:id/delete', (req, res) => {
-  //chistim bazu dannyh?
-});
+  router.get('/:id', async function (req, res, next) {
+    let houses = await House.findById(req.params.id);
+    res.render('detailed', { houses });
 
-router.post('/:id/save', upload.single('image_uploads'), async (req, res) => {
-  fs.renameSync(req.file.path, path.join(process.env.PWD, `public/img/${req.file.originalname}`));//put' skoree vsego nevernyj
-  const { price, name, description } = req.body;
-  await house.updateOne(req.params.id, { price, name, description });
-});
+  });
 
+  router.route('/new').get((req, res) => {
+    // otobrazhetsja vse formy dlja wablona dom
+  });
 
+  router.get('/:id', (req, res) => {
+    // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
+  });
 
+  router.get('/:id/edit', (req, res) => {
+    // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
+  });
 
-module.exports = router;
+  router.get('/:id/delete', (req, res) => {
+    //chistim bazu dannyh?
+  });
+
+  router.post('/:id/save', upload.single('image_uploads'), async (req, res) => {
+    fs.renameSync(
+      req.file.path,
+      path.join(process.env.PWD, `public/img/${req.file.originalname}`)
+    ); //put' skoree vsego nevernyj
+    const { price, name, description } = req.body;
+    await house.updateOne(req.params.id, { price, name, description });
+  });
+
+  module.exports = router;
