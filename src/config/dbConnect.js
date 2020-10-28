@@ -9,7 +9,7 @@ const options = {
   autoIndex: true,
   poolSize: 10,
   bufferMaxEntries: 0,
-}
+};
 
 const {
   DB_USER,
