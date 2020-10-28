@@ -10,13 +10,20 @@ router.get('/', (req, res) => {
   // otobrazhajutsja vse doma
 });
 
-router.get('/new', (req, res) => {
-  // otobrazhetsja vse formy dlja wablona dom
-});
+router.route('/new')
+  , get((req, res) => {
+    // otobrazhetsja vse formy dlja wablona dom
+  })
+    .post((upload.single('image_uploads'), async (req, res) => {
+      fs.renameSync(req.file.path, path.join(process.env.PWD, `public/img/${req.file.originalname}`));
+      const { price, name, description } = req.body;
+      const house = new House({ price, name, description });
+      await house.save();
+    })
 
 router.get('/:id', (req, res) => {
-  // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
-});
+      // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
+    });
 
 router.get('/:id/edit', (req, res) => {
   // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
@@ -27,10 +34,9 @@ router.get('/:id/delete', (req, res) => {
 });
 
 router.post('/:id/save', upload.single('image_uploads'), async (req, res) => {
-  fs.renameSync(req.file.path, path.join(process.env.PWD, `public/img/${req.file.originalname}`));
+  fs.renameSync(req.file.path, path.join(process.env.PWD, `public/img/${req.file.originalname}`));//put' skoree vsego nevernyj
   const { price, name, description } = req.body;
-  const house = new House({ price, name, description });
-  await house.save();
+  await house.updateOne(req.params.id, { price, name, description });
 });
 
 
