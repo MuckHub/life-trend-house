@@ -27,10 +27,6 @@ router
       })
   );
 
-router.get('/:id', async (req, res) => {
-  const houses = await House.findById(req.params.id).lean();
-  res.render('houses', { houses });
-})
 
 router.put('/:id', async function (req, res, next) {
   const house = await House.findById(req.params.id);
@@ -43,8 +39,6 @@ router.put('/:id', async function (req, res, next) {
 
   res.redirect(`/houses/${house.id}`);
 });
-
-<<<<<<< HEAD
 
 router.post('/:id/request', async (req, res) => {
 
