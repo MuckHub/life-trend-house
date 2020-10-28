@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const express = require('express')
 
 const houseSchema = new mongoose.Schema({
   name: {
@@ -16,9 +17,9 @@ const houseSchema = new mongoose.Schema({
   benefits: {
     type: String,
   },
-  images: [{
+  images: {
     type: String,
-  }],
+  },
 });
 
 

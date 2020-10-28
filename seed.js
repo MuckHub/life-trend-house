@@ -17,8 +17,14 @@ const lifeTrendHouse = async () => {
   userSeed();
 
   const houseSeed = async () => {
-    let house1 = await House.create({ name: faker.random.word(), description: faker.lorem.paragraph(), images: faker.image.imageUrl()});
-    let house2 = await House.create({ name: faker.random.word(), description: faker.lorem.paragraph(), images: faker.image.imageUrl()});
+    await House.create({ name: faker.random.word(), description: faker.lorem.paragraph(), images: 'https://images.unsplash.com/photo-1575517111478-7f6afd0973db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'});
+    await House.create({ name: faker.random.word(), description: faker.lorem.paragraph(), images: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'});
+    await House.create({ name: faker.random.word(), description: faker.lorem.paragraph(), images: 'https://images.unsplash.com/photo-1523217582562-09d0def993a6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'});
+    await House.create({ name: faker.random.word(), description: faker.lorem.paragraph(), images: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'});
+    await House.create({ name: faker.random.word(), description: faker.lorem.paragraph(), images: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'});
+    await House.create({ name: faker.random.word(), description: faker.lorem.paragraph(), images: 'https://images.unsplash.com/photo-1591474200742-8e512e6f98f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'});
+
+
   };
   houseSeed();
 
