@@ -27,11 +27,6 @@ router
       })
   );
 
-router.get('/:id', async (req, res) => {
-  const houses = await House.findById(req.params.id).lean();
-  res.render('houses', { houses });
-})
-
 router.put('/:id', async function (req, res, next) {
   const house = await House.findById(req.params.id);
 
@@ -44,9 +39,8 @@ router.put('/:id', async function (req, res, next) {
   res.redirect(`/houses/${house.id}`);
 });
 
-<<<<<<< HEAD
-
 router.post('/:id/request', async (req, res) => {
+  const { phone, email } = req.body;
 
   const id = req.params.id;
 
@@ -64,46 +58,47 @@ router.post('/:id/request', async (req, res) => {
     });
 
     let info = await transporter.sendMail({
-      from: // нужен адрес почты 
-        to: // кому отправляем
+      from: '"Fred Foo 👻" <foo@example.com>',
+      to: 'sinemettu@gmail.com',
       subject: "Новая заявка",
-      text: // текст сообщения
-        html: // тело сообщения
+      text: "Hello world?",
+      html: "<b>Hello world?</b>",
     });
+    console.log("Message sent: %s", info.messageId);
     res.status(200).send('Ok');
   } catch (error) {
     res.status(401).send('ой ой что-то пошло не так');
   }
+});
 
-  router.get('/:id', async function (req, res, next) {
-    let houses = await House.findById(req.params.id);
-    res.render('detailed', { houses });
+router.get('/:id', async function (req, res, next) {
+  let houses = await House.findById(req.params.id);
+  res.render('detailed', { houses });
+});
 
-  });
+router.route('/new').get((req, res) => {
+  // otobrazhetsja vse formy dlja wablona dom
+});
 
-  router.route('/new').get((req, res) => {
-    // otobrazhetsja vse formy dlja wablona dom
-  });
+router.get('/:id', (req, res) => {
+  // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
+});
 
-  router.get('/:id', (req, res) => {
-    // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
-  });
+router.get('/:id/edit', (req, res) => {
+  // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
+});
 
-  router.get('/:id/edit', (req, res) => {
-    // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
-  });
+router.get('/:id/delete', (req, res) => {
+  //chistim bazu dannyh?
+});
 
-  router.get('/:id/delete', (req, res) => {
-    //chistim bazu dannyh?
-  });
+router.post('/:id/save', upload.single('image_uploads'), async (req, res) => {
+  fs.renameSync(
+    req.file.path,
+    path.join(process.env.PWD, `public/img/${req.file.originalname}`)
+  ); //put' skoree vsego nevernyj
+  const { price, name, description } = req.body;
+  await house.updateOne(req.params.id, { price, name, description });
+});
 
-  router.post('/:id/save', upload.single('image_uploads'), async (req, res) => {
-    fs.renameSync(
-      req.file.path,
-      path.join(process.env.PWD, `public/img/${req.file.originalname}`)
-    ); //put' skoree vsego nevernyj
-    const { price, name, description } = req.body;
-    await house.updateOne(req.params.id, { price, name, description });
-  });
-
-  module.exports = router;
+module.exports = router;

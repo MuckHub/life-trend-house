@@ -1,14 +1,27 @@
-<div class="container">
-<div class="card mt-4 mx-auto">
-  <div class="card-header">
-    {{houses.name}}
-  </div>
-  <div class="card-body mx-auto">
-    <img class="rounded mt-5 text-center img-fluid" src="{{houses.images}}" class="img-fluid" alt="">
-    <p class="card-text mt-4">{{houses.description}}</p>
-    <div class="price mt-2">Price: $100,000.00</div>
-    <a href="#" class="btn btn-primary mt-4">Оставить заявку</a>
-  </div>
-</div>
-</div>
+<div id={{houses.id}} class="container">
+  <div class="card mt-4 mx-auto">
+    <div class="card-header">
+      {{houses.name}}
+    </div>
+    <div class="card-body mx-auto">
+      <img class="rounded mt-5 text-center img-fluid" src="{{houses.images}}" class="img-fluid" alt="">
+      <p class="card-text mt-4">{{houses.description}}</p>
+      <div class="price mt-2">Price: $100,000.00</div>
+      <a href="#" id='request' class="btn btn-primary mt-4">Оставить заявку</a>
 
+      <form id='requestForm' class='hidden mt-4'>
+        <div method='POST' class="form-group">
+
+          <input name='phone' type="text" placeholder="Номер телефона" class="form-control" id="phoneRequest">
+        </div>
+        <div class="form-group">
+
+          <input name='email' type="email" placeholder="Адрес электронной почты" class="form-control" id="emailRequest">
+        </div>
+
+        <button id='submitButton' type="submit" class="btn btn-primary">Отправить заявку</button>
+      </form>
+
+    </div>
+  </div>
+</div>
