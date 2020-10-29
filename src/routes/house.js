@@ -13,29 +13,34 @@ router
     const houses = await House.find().lean();
     res.render('houses', { houses });
   })
-  .post(
-    (upload.single('image_uploads'),
-      async (req, res) => {
-        fs.renameSync(
-          req.file.path,
-          path.join(process.env.PWD, `public/img/${req.file.originalname}`)
-        );
-        const { price, name, description } = req.body;
-        const house = new House({ price, name, description });
-        await house.save();
-        res.redirect(`/houses/${house.id}`);
-      })
-  );
 
-router.put('/:id', async function (req, res, next) {
+
+router.get('/:id', async function (req, res, next) {
+  let houses = await House.findById(req.params.id);
+  res.render('detailed', { houses });
+
+});
+
+router.get('/new', (req, res) => {
+  res.render('new');
+});
+
+router.get('/:id/edit', async (req, res) => {
+
   const house = await House.findById(req.params.id);
+  res.render('houseEditForm', { house });
+});
 
+router.post('/:id/save', upload.single('image_upload'), async (req, res) => {
+  const oldpath = reg.file.path;
+  const newpath = oldpath.replace(req.file.filename, req.file.originalname);
+  fs.renameSync(oldpath, newpath);
+  const house = await House.findById(req.params.id);
+  house.images = newpath;
+  house.price = req.body.price;
   house.name = req.body.name;
   house.description = req.body.description;
-  house.price = req.body.price;
-
   await house.save();
-
   res.redirect(`/houses/${house.id}`);
 });
 
@@ -71,34 +76,9 @@ router.post('/:id/request', async (req, res) => {
   }
 });
 
-router.get('/:id', async function (req, res, next) {
-  let houses = await House.findById(req.params.id);
-  res.render('detailed', { houses });
-});
-
-router.route('/new').get((req, res) => {
-  // otobrazhetsja vse formy dlja wablona dom
-});
-
-router.get('/:id', (req, res) => {
-  // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
-});
-
-router.get('/:id/edit', (req, res) => {
-  // vse texsty zamenjajutsja na formochki/ vozmozhno 4erez fetch zaprosy)
-});
-
-router.get('/:id/delete', (req, res) => {
-  //chistim bazu dannyh?
-});
-
-router.post('/:id/save', upload.single('image_uploads'), async (req, res) => {
-  fs.renameSync(
-    req.file.path,
-    path.join(process.env.PWD, `public/img/${req.file.originalname}`)
-  ); //put' skoree vsego nevernyj
-  const { price, name, description } = req.body;
-  await house.updateOne(req.params.id, { price, name, description });
+router.get('/:id/delete', async (req, res) => {
+  await House.deleteOne({ '_id': req.params.id });
+  res.redirect('/');
 });
 
 module.exports = router;
