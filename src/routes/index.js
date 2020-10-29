@@ -15,4 +15,9 @@ router.get('/team', (req, res) => {
   res.render('team');
 });
 
+router.get('/spasibo', (req, res) => {
+  res.render('spasibo');
+});
+
+
 module.exports = router;

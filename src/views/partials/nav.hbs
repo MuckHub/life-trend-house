@@ -1,24 +1,30 @@
 <header>
- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">Life Trend House</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav ml-5">
-      <li class="nav-item ">
-        <a class="nav-link" href="/houses">Дома </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/portfolio">Портфолио</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/team">Команда</a>
-      </li>
-       <li class="nav-item">
-        <a class="nav-link" href="/contacts">Контакты</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Life Trend House</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-5">
+        <li class="nav-item ">
+          <a class="nav-link" href="/houses">Дома </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/portfolio">Портфолио</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/team">Команда</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contacts">Контакты</a>
+        </li>
+        <li class="nav-item">
+          {{#if isAdmin}}
+          <a class="nav-link" href="/houses/new">Добавить</a>
+          {{/if}}
+        </li>
+      </ul>
+    </div>
+  </nav>
 </header>

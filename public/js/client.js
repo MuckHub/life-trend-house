@@ -1,4 +1,3 @@
-
 const button = document.querySelector('#request');
 const submitButton = document.querySelector('#submitButton');
 const requestForm = document.querySelector('#requestForm');
@@ -27,8 +26,15 @@ if (button) {
         body: JSON.stringify(data),
       });
 
-      // const result = await response;
-      console.log(response.status);
+      location.href = '/spasibo';
     }
   });
+}
+
+if (location.pathname == '/spasibo') {
+
+  setTimeout(() => {
+
+    location.href = '/';
+  }, 3000)
 }
