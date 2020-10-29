@@ -2,8 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const hbs = require('hbs');
-const fs = require('fs');
-const multer = require('multer');
+const session = require('express-session');
+const sessionFileStore = require('session-file-store');
 const app = express();
 const indexRouter = require('./src/routes/index');
 const houseRouter = require('./src/routes/house');
@@ -26,13 +26,34 @@ app.use(methodOverride(function (req, res) {
   }
 }));
 
+app.set('session cookie name', 'sid');
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'src/views'));
+
 hbs.registerPartials(path.join(process.env.PWD, 'src', 'views', 'partials'));
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+const FileStore = sessionFileStore(session);
+app.use(session({
+  name: app.get('session cookie name'),
+  secret: process.env.SESSION_SECRET,
+  store: new FileStore({
+    // Шифрование сессии
+    secret: process.env.SESSION_SECRET,
+  }),
+  // Если true, сохраняет сессию, даже если она не поменялась
+  resave: false,
+  // Если false, куки появляются только при установке req.session
+  saveUninitialized: false,
+  cookie: {
+    // В продакшне нужно "secure: true" для HTTPS
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 1000 * 60 * 1
+  }
+}));
 
 app.use('/', indexRouter);
 app.use('/houses', houseRouter);
