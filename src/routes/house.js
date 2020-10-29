@@ -21,8 +21,7 @@ router.get('/:id', async function (req, res, next) {
 });
 
 router.get('/new', (req, res) => {
-  const house = new House();
-  res.redirect(`/houses/${house.id}/edit`);
+  res.render('new');
 });
 
 router.get('/:id/edit', async (req, res) => {
