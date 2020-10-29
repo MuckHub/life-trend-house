@@ -18,3 +18,8 @@
   color: #000 !important;
   text-decoration: none;
 }
+
+.edit-img {
+  width: auto;
+  height: 230px;
+}

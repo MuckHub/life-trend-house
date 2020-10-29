@@ -3,8 +3,8 @@
     <div class="card-header">
       {{houses.name}}
       <div class='btn-admin'>
-        <a href="#" class="btn btn-primary mt-4">Edit</a>
-        <a href="#" class="btn btn-primary mt-4">Delete</a>
+        <a href="{{houses.id}}/edit" class="btn btn-primary mt-4">Edit</a>
+        <a href="#" class="btn btn-primary mt-4" data-toggle="modal" data-target="#exampleModal">Delete</a>
       </div>
     </div>
     <div class="card-body mx-auto">
@@ -28,4 +28,30 @@
 
     </div>
   </div>
+
+
+
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Вы уверены, что хотите удалить эту запись?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button id="delete-btn" type="button" class="btn btn-primary">Удалить</button>
+      </div>
+    </div>
+  </div>
 </div>
+
+</div>
+
