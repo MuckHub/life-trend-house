@@ -1,0 +1,45 @@
+<div class="container">
+<div class="card mt-4 mx-auto">
+  <div class="card-header">
+    Редактировать
+  </div>
+  <div class="card-body mx-auto">
+    
+<form method="POST" action="/houses/{{house.id}}/edit" enctype="multipart/form-data">
+
+  <div class="form-group">
+    <label for="house-name">Название</label>
+    <input name="name" type="text" class="form-control" value="{{house.name}}" id="house-name" aria-describedby="emailHelp">
+  </div>
+
+  <div class="form-group">
+    <label for="house-description">Описание</label>
+    <textarea name="description"  type="text" class="form-control" rows="3"  id="house-description">{{house.description}}</textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="house-description">Цена</label>
+    <input name="price"  type="text" class="form-control" value="{{house.price}}" id="house-price">
+  </div>
+
+  <div class="input-group mt-3 mb-3 flex-column">
+    <div>  
+      <label for="avatar">Картинка</label>
+    </div>  
+
+    <div>
+      <img src="/img/{{house.images}}"  class="edit-img mt-2 rounded mx-auto d-block" alt="...">
+    </div>
+
+   <div class="mt-2">Поменять: </div>
+   <input class="mt-2" type="file" id="avatar" name="image_upload"> 
+  </div>
+  
+  <button id="house-edit" type="submit" class="btn btn-primary mt-2">Редактировать</button>
+
+</form>
+
+    
+</div>
+</div>
+</div>

@@ -31,9 +31,40 @@ router.get('/:id', async (req, res, next) => {
   res.render('detailed', { houses });
 });
 
+router.delete('/:id', async (req, res) => {
+  const house = await House.findById(req.params.id);
+
+  const path = `/img/${house.images}`;
+  await House.deleteOne({ _id: req.params.id });
+
+  fs.unlink(path, (err) => {
+    if (err) {
+      console.error(err);
+    }
+  });
+
+  res.status(200).send();
+});
+
 router.get('/:id/edit', async (req, res) => {
   const house = await House.findById(req.params.id);
-  res.render('houseEditForm', { house });
+  res.render('edit', { house });
+});
+
+router.post('/:id/edit', upload.single('image_upload'), async (req, res) => {
+  const house = await House.findById(req.params.id);
+
+  house.name = req.body.name;
+  house.description = req.body.description;
+  house.price = req.body.price;
+
+  if (req.file) {
+    house.images = req.file.filename;
+  }
+
+  await house.save();
+
+  res.redirect(`/houses/${house.id}`);
 });
 
 router.post('/add', upload.single('image_upload'), async (request, res) => {
@@ -49,7 +80,6 @@ router.post('/add', upload.single('image_upload'), async (request, res) => {
 
 router.post('/:id/request', async (req, res) => {
   const { phone, email } = req.body;
-
   const { id } = req.params;
 
   try {
@@ -77,11 +107,6 @@ router.post('/:id/request', async (req, res) => {
   } catch (error) {
     res.status(401).send('ой ой что-то пошло не так');
   }
-});
-
-router.get('/:id/delete', async (req, res) => {
-  await House.deleteOne({ _id: req.params.id });
-  res.redirect('/');
 });
 
 module.exports = router;
