@@ -1,3 +1,20 @@
 .hidden {
   display: none;
 }
+
+.btn-admin {
+  float: right;
+}
+
+.btn-portfolio-admin {
+  text-align: left;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.btn-edit-admin {
+  color: #000 !important;
+  text-decoration: none;
+}
