@@ -7,6 +7,7 @@ const multer = require('multer');
 const app = express();
 const indexRouter = require('./src/routes/index');
 const houseRouter = require('./src/routes/house');
+const loginRouter = require('./src/routes/login');
 const portfolioRouter = require('./src/routes/portfolio');
 const adminRouter = require('./src/routes/admin');
 
@@ -36,6 +37,7 @@ app.use(express.json());
 
 app.use('/', indexRouter);
 app.use('/houses', houseRouter);
+app.use('/login', loginRouter);
 app.use('/portfolio', portfolioRouter);
 app.use('/admin', adminRouter);
 
