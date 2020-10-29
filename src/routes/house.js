@@ -48,21 +48,21 @@ router.post('/:id/request', async (req, res) => {
     let testAccount = await nodemailer.createTestAccount();
 
     let transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
-      secure: false,
+      host: "smtp.mail.ru",
+      port: 465,
+      secure: true,
       auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
+        user: "lifetrendhouse@mail.ru",
+        pass: "nodemailer001",
       },
     });
 
     let info = await transporter.sendMail({
-      from: '"Fred Foo 👻" <foo@example.com>',
-      to: 'sinemettu@gmail.com',
-      subject: "Новая заявка",
-      text: "Hello world?",
-      html: "<b>Hello world?</b>",
+      from: "Trend Life House <lifetrendhouse@mail.ru>",
+      to: 'sinemettu@gmail.com, rudnevaketi@gmail.com, rudnevaketi@mail.ru',
+      subject: "Yo!",
+      text: "Yo!",
+      html: `"<b>Hello world?</b>, email: ${req.body.email}, tel: ${req.body.phone}`,
     });
     console.log("Message sent: %s", info.messageId);
     res.status(200).send('Ok');
