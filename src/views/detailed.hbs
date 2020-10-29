@@ -4,9 +4,9 @@
       {{houses.name}}
     </div>
     <div class="card-body mx-auto">
-      <img class="rounded mt-5 text-center img-fluid" src="{{houses.images}}" class="img-fluid" alt="">
+      <img class="rounded mt-5 text-center img-fluid" src="/img/{{houses.images}}" class="img-fluid" alt="">
       <p class="card-text mt-4">{{houses.description}}</p>
-      <div class="price mt-2">Price: $100,000.00</div>
+      <div class="price mt-2">Price: ${{houses.price}}</div>
       <a href="#" id='request' class="btn btn-primary mt-4">Оставить заявку</a>
 
       <form id='requestForm' class='hidden mt-4'>
