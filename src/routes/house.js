@@ -14,6 +14,7 @@ router
     res.render('houses', { houses });
   })
 
+
 router.get('/:id', async function (req, res, next) {
   let houses = await House.findById(req.params.id);
   res.render('detailed', { houses });
@@ -25,6 +26,7 @@ router.get('/new', (req, res) => {
 });
 
 router.get('/:id/edit', async (req, res) => {
+
   const house = await House.findById(req.params.id);
   res.render('houseEditForm', { house });
 });
@@ -42,35 +44,41 @@ router.post('/:id/save', upload.single('image_upload'), async (req, res) => {
   res.redirect(`/houses/${house.id}`);
 });
 
+router.post('/:id/request', async (req, res) => {
+  const { phone, email } = req.body;
+
+  const id = req.params.id;
+
+  try {
+    let testAccount = await nodemailer.createTestAccount();
+
+    let transporter = nodemailer.createTransport({
+      host: "smtp.mail.ru",
+      port: 465,
+      secure: true,
+      auth: {
+        user: "lifetrendhouse@mail.ru",
+        pass: "nodemailer001",
+      },
+    });
+
+    let info = await transporter.sendMail({
+      from: "Trend Life House <lifetrendhouse@mail.ru>",
+      to: 'sinemettu@gmail.com, rudnevaketi@gmail.com, rudnevaketi@mail.ru',
+      subject: "Yo!",
+      text: "Yo!",
+      html: `"<b>Hello world?</b>, email: ${req.body.email}, tel: ${req.body.phone}`,
+    });
+    console.log("Message sent: %s", info.messageId);
+    res.status(200).send('Ok');
+  } catch (error) {
+    res.status(401).send('ой ой что-то пошло не так');
+  }
+});
+
 router.get('/:id/delete', async (req, res) => {
   await House.deleteOne({ '_id': req.params.id });
   res.redirect('/');
 });
 
-// router.post('/:id/request', async (req, res) => {
-//   const id = req.params.id;
-//   try {
-//     let testAccount = await nodemailer.createTestAccount();
-
-//     let transporter = nodemailer.createTransport({
-//       host: "smtp.ethereal.email",
-//       port: 587,
-//       secure: false,
-//       auth: {
-//         user: testAccount.user,
-//         pass: testAccount.pass,
-//       },
-//     });
-
-//     let info = await transporter.sendMail({
-//       // from: // нужен адрес почты 
-//       //   to: // кому отправляем
-//       // subject: "Новая заявка",
-//       // text: // текст сообщения
-//       //   html: // тело сообщения
-//     });
-//     res.status(200).send('Ok');
-//   } catch (error) {
-//     res.status(401).send('ой ой что-то пошло не так');
-//   }
 module.exports = router;
