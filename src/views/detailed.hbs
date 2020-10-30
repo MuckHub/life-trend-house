@@ -1,6 +1,6 @@
 <div id={{houses.id}} class="container">
   <div class="card mt-4 mx-auto">
-    <div class="card-header">
+    <div  class="card-header">
       {{houses.name}}
       {{#if isAuth}}
       <div class='btn-admin'>
@@ -8,12 +8,15 @@
         <a href="#" class="btn btn-primary mt-4" data-toggle="modal" data-target="#exampleModal">Delete</a>
       </div>
       {{/if}}
-    </div>
+    </div >
     <div class="card-body mx-auto">
-      <img class="rounded mt-5 text-center img-fluid" src="/img/{{houses.images}}" class="img-fluid" alt="">
+      <div class="mx-auto">
+          <img class="rounded mt-5 text-center img-fluid detailed-img" src="/img/{{houses.images}}" class="img-fluid" alt="">
+      </div>
+      
       <p class="card-text mt-4">{{houses.description}}</p>
       <div class="price mt-2">Price: ${{houses.price}}</div>
-      <a href="#" id='request' class="btn btn-primary mt-4">Оставить заявку</a>
+      <a href="#" id='request' class="btn btn-dark mt-4">Оставить заявку</a>
 
       <form id='requestForm' class='hidden mt-4'>
         <div method='POST' class="form-group">
@@ -25,7 +28,7 @@
           <input name='email' type="email" placeholder="Адрес электронной почты" class="form-control" id="emailRequest">
         </div>
 
-        <button id='submitButton' type="submit" class="btn btn-primary">Отправить заявку</button>
+        <button id='submitButton' type="submit" class="btn btn-dark">Отправить заявку</button>
       </form>
 
     </div>
