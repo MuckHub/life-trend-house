@@ -20,10 +20,14 @@ router.post('/login', async (req, res) => {
           req.session.user = admin;
           res.redirect('/houses');
         }
+      } else {
+        res.redirect(401, '/');
       }
     } catch (e) {
       console.log(e);
     }
+  } else {
+    res.render('main', { error: 'Oops, something went wrong!' })
   }
 });
 

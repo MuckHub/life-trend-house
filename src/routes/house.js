@@ -98,9 +98,15 @@ router.post('/:id/request', async (req, res) => {
     const info = await transporter.sendMail({
       from: 'Trend Life House <lifetrendhouse@mail.ru>',
       to: 'sinemettu@gmail.com, rudnevaketi@gmail.com, rudnevaketi@mail.ru',
-      subject: 'Yo!',
-      text: 'Yo!',
-      html: `"<b>Hello world?</b>, email: ${req.body.email}, tel: ${req.body.phone}`,
+      subject: 'Новый контакт Life Trend House',
+      html: `
+      <h3>На сайте новый подписчик: <h3>
+      <ul> 
+      <li> Email: ${req.body.email} </li> 
+      <li> Tel: ${req.body.phone} </li>
+      <li> Комментарий к заказу: ${req.body.phone} </li>
+      </ul>
+      `,
     });
     console.log('Message sent: %s', info.messageId);
     res.status(200).send('Ok');
