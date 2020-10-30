@@ -38,3 +38,44 @@
   width: cover;
   height: auto;
 }
+
+.img-team {
+  width: 200px;
+  height: auto;
+}
+
+#avatar1 {
+  /* This image is 687 wide by 1024 tall, similar to your aspect ratio */
+  background-image: url('/img/lena.jpg');
+
+  /* make a square container */
+  width: 150px;
+  height: 150px;
+
+  /* fill the container, preserving aspect ratio, and cropping to fit */
+  background-size: cover;
+
+  /* center the image vertically and horizontally */
+  background-position: 150px -15px;
+
+  /* round the edges to a circle with border radius 1/2 container size */
+  border-radius: 50%;
+}
+
+#avatar2 {
+  /* This image is 687 wide by 1024 tall, similar to your aspect ratio */
+  background-image: url('/img/vadim.jpeg');
+
+  /* make a square container */
+  width: 150px;
+  height: 150px;
+
+  /* fill the container, preserving aspect ratio, and cropping to fit */
+  background-size: cover;
+
+  /* center the image vertically and horizontally */
+  background-position: 164px 0px;
+
+  /* round the edges to a circle with border radius 1/2 container size */
+  border-radius: 50%;
+}
