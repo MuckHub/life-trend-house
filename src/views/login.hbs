@@ -4,7 +4,7 @@
       Log in
     </div>
     <div class="card-body mx-auto">
-      <form id='signin' method='POST' action="/login" class='block w-100 mar-b-1'>
+      <form id='signin' method='POST' action="/admin/login" class='block w-100 mar-b-1'>
         {{!-- <div class="form-group">
           <input name='username' type="text" placeholder="Ваше имя" class="block w-100 form-control">
         </div> --}}
@@ -12,7 +12,7 @@
           <input name='email' type="email" placeholder="Email" class="block w-100 form-control">
         </div>
         <div class="form-group">
-          <input password='email' type="password" placeholder="Пароль" class=" block w-100 form-control">
+          <input name='password' type="password" placeholder="Пароль" class=" block w-100 form-control">
         </div>
         <button id='submitButton' type="submit" class="block w-100 btn btn-primary">Авторизоваться</button>
       </form>
