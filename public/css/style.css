@@ -33,3 +33,8 @@
   width: 600px;
   height: auto;
 }
+
+.modal-img {
+  width: cover;
+  height: auto;
+}

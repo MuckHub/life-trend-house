@@ -1,0 +1,29 @@
+<div class="container">
+<div class="card mt-4 mx-auto">
+  <div class="card-header">
+    Добавить новую картинку
+  </div>
+  <div class="card-body mx-auto">
+    
+<form method="POST" action="/portfolio/add" enctype="multipart/form-data">
+
+
+   <div class="input-group mt-3 mb-3 flex-column">
+   <div>  
+     <label for="avatar">Выберите картинку</label>
+  </div>  
+
+  <div>
+    <input type="file"
+       id="avatar" name="portfolio_image_upload">
+  </div>
+        
+</div>
+  
+  <button type="submit" class="btn btn-primary">Добавить</button>
+</form>
+
+    
+  </div>
+</div>
+</div>
