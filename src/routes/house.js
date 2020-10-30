@@ -2,6 +2,7 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const multer = require('multer');
 const House = require('../models/House');
+const loggedIn = require('../middleware/admin');
 
 const router = express.Router();
 const fs = require('fs');
@@ -22,7 +23,7 @@ router.route('/').get(async (req, res) => {
   res.render('houses', { houses });
 });
 
-router.get('/new', (req, res) => {
+router.get('/new', loggedIn, (req, res) => {
   res.render('new');
 });
 
@@ -31,7 +32,7 @@ router.get('/:id', async (req, res, next) => {
   res.render('detailed', { houses });
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', loggedIn, async (req, res) => {
   const house = await House.findById(req.params.id);
 
   const path = `/img/${house.images}`;
@@ -46,37 +47,47 @@ router.delete('/:id', async (req, res) => {
   res.status(200).send();
 });
 
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', loggedIn, async (req, res) => {
   const house = await House.findById(req.params.id);
   res.render('edit', { house });
 });
 
-router.post('/:id/edit', upload.single('image_upload'), async (req, res) => {
-  const house = await House.findById(req.params.id);
+router.post(
+  '/:id/edit',
+  loggedIn,
+  upload.single('image_upload'),
+  async (req, res) => {
+    const house = await House.findById(req.params.id);
 
-  house.name = req.body.name;
-  house.description = req.body.description;
-  house.price = req.body.price;
+    house.name = req.body.name;
+    house.description = req.body.description;
+    house.price = req.body.price;
 
-  if (req.file) {
-    house.images = req.file.filename;
+    if (req.file) {
+      house.images = req.file.filename;
+    }
+
+    await house.save();
+
+    res.redirect(`/houses/${house.id}`);
   }
+);
 
-  await house.save();
+router.post(
+  '/add',
+  loggedIn,
+  upload.single('image_upload'),
+  async (request, res) => {
+    const newHouse = await new House({
+      name: request.body.name,
+      description: request.body.description,
+      price: request.body.price,
+      images: request.file.filename,
+    }).save();
 
-  res.redirect(`/houses/${house.id}`);
-});
-
-router.post('/add', upload.single('image_upload'), async (request, res) => {
-  const newHouse = await new House({
-    name: request.body.name,
-    description: request.body.description,
-    price: request.body.price,
-    images: request.file.filename,
-  }).save();
-
-  res.redirect(`/houses/${newHouse.id}`);
-});
+    res.redirect(`/houses/${newHouse.id}`);
+  }
+);
 
 router.post('/:id/request', async (req, res) => {
   const { phone, email } = req.body;
