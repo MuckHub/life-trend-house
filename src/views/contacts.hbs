@@ -2,24 +2,25 @@
   <div class="card mt-4 mx-auto">
     <div class="card-header">
       Наши контакты
-       {{#if isAuth}}
       <div class='btn-admin'>
-        <a href="#" class="btn btn-primary mt-4">Edit</a>
+        {{#if isAuth}}
+        <a href="/contacts/edit" class="btn btn-primary mt-4">Edit</a>
+        {{/if}}
       </div>
-      {{/if}}
     </div>
     <div class="card-body mx-auto">
-
       <p class="card-text mt-4">
-        Если у Вас есть вопросы, позвоните нам в рабочее время:
-        +7 (499) 112-05-53</p>
-
+        {{contact.name}}
+      </p>
       <p class="card-text mt-4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis asperiores explicabo minus dignissimos cupiditate!
-        Dignissimos illo pariatur tempore ipsum ipsam sunt dolorum, repellendus modi, amet obcaecati, id nisi reiciendis
-        dolores.</p>
-
-
+        Наш телефон: {{contact.tel}}
+      </p>
+      <p class="card-text mt-4">
+        Наш адрес электронной почты: {{contact.email}}
+      </p>
+      <p class="card-text mt-4">
+        Наш адрес: {{contact.address}}
+      </p>
     </div>
   </div>
 </div>
