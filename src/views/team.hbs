@@ -2,9 +2,11 @@
   <div class="card mt-4 mx-auto">
     <div class="card-header">
       О нас
+      {{#if isAuth}}
       <div class='btn-admin'>
         <a href="#" class="btn btn-primary mt-4">Edit</a>
       </div>
+      {{/if}}
     </div>
     <div class="card-body mx-auto">
 
