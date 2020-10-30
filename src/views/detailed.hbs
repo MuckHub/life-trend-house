@@ -2,10 +2,12 @@
   <div class="card mt-4 mx-auto">
     <div class="card-header">
       {{houses.name}}
+      {{#if isAuth}}
       <div class='btn-admin'>
         <a href="{{houses.id}}/edit" class="btn btn-primary mt-4">Edit</a>
         <a href="#" class="btn btn-primary mt-4" data-toggle="modal" data-target="#exampleModal">Delete</a>
       </div>
+      {{/if}}
     </div>
     <div class="card-body mx-auto">
       <img class="rounded mt-5 text-center img-fluid" src="/img/{{houses.images}}" class="img-fluid" alt="">
