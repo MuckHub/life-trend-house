@@ -27,7 +27,7 @@ router.post('/login', async (req, res) => {
       console.log(e);
     }
   } else {
-    res.render('main', { error: 'Oops, something went wrong!' })
+    res.redirect(401, '/');
   }
 });
 
