@@ -23,3 +23,13 @@
   width: auto;
   height: 230px;
 }
+
+.main-img {
+  width: cover;
+  height: 180px;
+}
+
+.detailed-img {
+  width: 600px;
+  height: auto;
+}
