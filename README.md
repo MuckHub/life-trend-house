@@ -16,6 +16,5 @@
   <img src="public/img/LTH_0.png" width="300" alt="1">
   <img src="public/img/LTH_1.png" width="300" alt="2">
   <img src="public/img/LTH_2.png" width="300" alt="3">
-  <img src="public/img/LTH_3.png" width="300" alt="4">
 </p>
 
