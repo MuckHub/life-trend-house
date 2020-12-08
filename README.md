@@ -15,8 +15,8 @@
 <p align="center">
   
   
-  <img src="public/img/LTH_2.png" width="300" alt="3">
-  <img src="public/img/LTH_1.png" width="300" alt="2">
+  <img src="public/img/LTH_2.png" width="300" alt="3"><br>
+  <img src="public/img/LTH_1.png" width="300" alt="2"><br>
   <img src="public/img/LTH_0.png" width="300" alt="1">
 </p>
 
