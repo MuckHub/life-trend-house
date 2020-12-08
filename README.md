@@ -7,7 +7,7 @@
 — JavaScript<br>
 — Express.js<br>
 — Node.js<br>
-— Handlebars
+— Handlebars<br>
 — MongoDB
 
 <hr>
